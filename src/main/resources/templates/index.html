@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,6 +54,11 @@
 </head>
 <body>
     <h1>Todo Application</h1>
+    
+    <div class="nav-links" style="margin: 20px 0;">
+        <a th:href="@{/todos}" style="display: inline-block; background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; margin-right: 10px;">View Todos (Thymeleaf)</a>
+        <a th:href="@{/todos/create}" style="display: inline-block; background-color: #008CBA; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">Create Todo (Thymeleaf)</a>
+    </div>
     
     <div class="todo-form">
         <h2>Add New Todo</h2>

@@ -1,16 +1,23 @@
 package com.example.demo.config
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.web.servlet.DispatcherServlet
 
 @Configuration
-class WebConfig : WebMvcConfigurer {
+class WebConfig {
 
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/**")
-            .addResourceLocations("classpath:/static/")
-            .setCachePeriod(3600)
-            .resourceChain(true)
+    @Bean
+    fun dispatcherServlet(): DispatcherServlet {
+        val servlet = DispatcherServlet()
+        return servlet;
     }
+
+    @Bean
+    fun dispatcherServletRegistration(): ServletRegistrationBean<DispatcherServlet> {
+        val registration = ServletRegistrationBean(dispatcherServlet(), "/")
+        return registration
+    }
+
 }

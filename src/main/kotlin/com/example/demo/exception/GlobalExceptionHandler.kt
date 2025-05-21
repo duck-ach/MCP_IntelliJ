@@ -19,12 +19,12 @@ class GlobalExceptionHandler {
         return ResponseEntity(error, HttpStatus.NOT_FOUND)
     }
     
-    @ExceptionHandler(NoResourceFoundException::class)
-    fun handleNoResourceFoundException(e: NoResourceFoundException): ResponseEntity<ErrorResponse> {
-        logger.error("Static resource not found: ${e.message}")
-        val error = ErrorResponse("Resource not found", "The requested static resource does not exist")
-        return ResponseEntity(error, HttpStatus.NOT_FOUND)
-    }
+//    @ExceptionHandler(NoResourceFoundException::class)
+//    fun handleNoResourceFoundException(e: NoResourceFoundException): ResponseEntity<ErrorResponse> {
+//        logger.error("Static resource not found: ${e.message}")
+//        val error = ErrorResponse("Resource not found", "The requested static resource does not exist")
+//        return ResponseEntity(error, HttpStatus.NOT_FOUND)
+//    }
     
     @ExceptionHandler(Exception::class)
     fun handleGeneralException(e: Exception): ResponseEntity<ErrorResponse> {
