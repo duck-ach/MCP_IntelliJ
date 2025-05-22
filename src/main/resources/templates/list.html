@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,59 +10,82 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .welcome-msg {
+            color: #333;
+            font-weight: bold;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
         }
         h1 {
             color: #333;
-        }
-        .todo-list {
-            margin-top: 20px;
-        }
-        .todo-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-        .todo-item.done {
-            background-color: #f8f8f8;
-        }
-        .todo-title {
-            font-weight: bold;
-        }
-        .todo-actions {
-            margin-top: 10px;
-        }
-        .todo-done {
-            text-decoration: line-through;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            margin-right: 5px;
-            border-radius: 3px;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-        .btn-danger {
-            background-color: #f44336;
-        }
-        .btn-danger:hover {
-            background-color: #da190b;
+            margin: 0;
         }
         .nav-links {
             margin-bottom: 20px;
         }
         .nav-links a {
-            margin-right: 10px;
-            color: #4CAF50;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
             text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
         }
         .nav-links a:hover {
-            text-decoration: underline;
+            background-color: #0056b3;
+        }
+        .todo-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .todo-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .todo-item.done {
+            background-color: #f8f9fa;
+            border-color: #28a745;
+        }
+        .todo-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .todo-done {
+            text-decoration: line-through;
+            color: #6c757d;
         }
         .checkbox-container {
             display: flex;
@@ -70,21 +93,43 @@
             margin-bottom: 5px;
         }
         .checkbox-container input[type="checkbox"] {
-            margin-right: 10px;
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        .empty-state a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .empty-state a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/todos/create">Create Todo</a>
+    <div class="header">
+        <h1>Todo List</h1>
+        <div class="user-info">
+            <span class="welcome-msg" th:text="'안녕하세요, ' + ${nickname} + '님!'">안녕하세요, 사용자님!</span>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn">로그아웃</button>
+            </form>
+        </div>
     </div>
 
-    <h1>Todo List</h1>
+    <div class="nav-links">
+        <a th:href="@{/todos/create}">새 할일 추가</a>
+    </div>
     
     <div class="todo-list">
-        <div th:if="${todos.empty}" class="todo-item">
-            <p>No todos found. <a href="/todos/create">Create one now</a>.</p>
+        <div th:if="${todos.empty}" class="empty-state">
+            <p>아직 할일이 없습니다.</p>
+            <a th:href="@{/todos/create}">첫 번째 할일을 추가해보세요!</a>
         </div>
         
         <div th:each="todo : ${todos}" class="todo-item" th:classappend="${todo.isDone} ? 'done' : ''">

@@ -1,5 +1,7 @@
 package com.example.demo.controller
 
+import com.example.demo.dto.UserResponse
+import jakarta.servlet.http.HttpSession
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
@@ -7,14 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping
 class HomeController {
 
     @GetMapping("/")
-    fun home(): String {
-        return "index"
-    }
-
-    @GetMapping("/**")
-    fun fallback(): String {
-        // 없는 경로 접근 시 index.html 보여주기 (SPA 스타일 or fallback)
-        return "index"
+    fun home(session: HttpSession): String {
+        val sessionUser = session.getAttribute("user") as? UserResponse
+        return if (sessionUser != null) {
+            "redirect:/todos"
+        } else {
+            "index"
+        }
     }
 
     @GetMapping("/view")

@@ -15,5 +15,9 @@ data class Todo(
     var description: String? = null,
     
     @Column
-    var isDone: Boolean = false
+    var isDone: Boolean = false,
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: User
 )
